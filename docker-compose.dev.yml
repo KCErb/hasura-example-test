@@ -1,0 +1,22 @@
+version: '3.6'
+services:
+  postgres:
+    restart: always
+    volumes:
+    - db_data:/var/lib/postgresql/data
+  graphql-engine:
+    ports:
+    - 8080:8080
+    - 9695:9695
+    - 9693:9693
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_MIGRATIONS_DIR: /app-name/migrations
+    volumes:
+    - ./db/hasura:/app-name
+    working_dir: /app-name
+    tty: true
+volumes:
+  db_data:

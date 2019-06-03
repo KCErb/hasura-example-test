@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  postgres:
+    image: postgres
+    networks:
+    - internal
+  graphql-engine:
+    image: hasura/graphql-engine:v1.0.0-beta.2.cli-migrations
+    depends_on:
+    - postgres
+    networks:
+    - internal
+    - external
+
+networks:
+  external:
+  internal:
